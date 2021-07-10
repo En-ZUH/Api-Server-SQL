@@ -1,7 +1,8 @@
 'use strict';
 
-const router = express.Router();
 const express = require('express');
+const router = express.Router();
+
 const ClothesModel = require('../models/clothes');
 const Clothes = require('../models/data-collection-class');
 
@@ -16,11 +17,11 @@ const validator = require('../middleware/validator.js');
 //_________________________________________________________________________
 
 
-let creatClothes = async (request, response, next) => {
+let createClothes = async (request, response, next) => {
 
     try {
         let clothesObj = request.body;
-        const responseObj = await clothesData.creat(clothesObj);
+        const responseObj = await clothesData.create(clothesObj);
         response.status(201).json(responseObj.rows[0]);
     }
     catch (error) {
@@ -88,7 +89,7 @@ let deleteClothes = async (request, response, next) => {
 
 router.get('/', getClothes);
 router.get('/:id', getCertainClothes);
-router.post('/', creatClothes);
+router.post('/', createClothes);
 router.put('/:id', updateClothes);
 router.delete('/:id', deleteClothes);
 

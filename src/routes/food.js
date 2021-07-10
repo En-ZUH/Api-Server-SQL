@@ -1,7 +1,8 @@
 'use strict';
 
-const router = express.Router();
+
 const express = require('express');
+const router = express.Router();
 const foodModel = require('../models/food');
 const Food = require('../models/data-collection-class');
 
@@ -16,10 +17,12 @@ const validator = require('../middleware/validator.js');
 //_________________________________________________________________________
 
 
-let creatFood = async (request, response, next) => {
-    let foodObj = request.body;
+
+let createFood = async (request, response, next) => {
+
     try {
-        const responseObj = await foodData.creat(foodObj);
+        let foodObj = request.body;
+        const responseObj = await foodData.create(foodObj);
         response.status(201).json(responseObj.rows[0]);
     }
     catch (error) { next(error) };
@@ -29,29 +32,38 @@ let creatFood = async (request, response, next) => {
 //_________________________________________________________________________
 
 
-let getFood = async (request, response, next) => {
-    try {
-        const responseObj = await foodData.get();
-        if (responseObj.length === 0)
-            response.json('No data yet');
-        else
-            response.json(responseObj.rows);
-    }
-    catch (error) { next(error) };
+// let getFood = async (request, response, next) => {
+//     try {
+//         const responseObj = await foodData.get();
+//         if (responseObj.length === 0)
+//             response.json('No data yet');
+//         else
+//             response.json(responseObj.rows);
+//     }
+//     catch (error) { next(error) };
 
+// }
+async function getFood(req, res, next) {
+    try {
+        const id = req.params.id;
+        const responseObj = await foodData.get(id);
+        response.json({ responseObj: responseObj.rows });
+    } catch (e) {
+        next(e);
+    }
 }
 
 //_________________________________________________________________________
 
 
-let getCertainFood = async (request, response, next) => { //by id
-    let id = request.params.id;
-    try {
-        const responseObj = await foodData.get(id);
-        response.json(responseObj.rows[0]);
-    }
-    catch (error) { next(error) };
-}
+// let getCertainFood = async (request, response, next) => { //by id
+//     let id = request.params.id;
+//     try {
+//         const responseObj = await foodData.get(id);
+//         response.json(responseObj.rows[0]);
+//     }
+//     catch (error) { next(error) };
+// }
 
 //_________________________________________________________________________
 
@@ -79,9 +91,10 @@ let deleteFood = async (request, response, next) => {
 
 //_________________________________________________________________________
 //: /food
+
 router.get('/', getFood);
-router.get('/:id', getCertainFood);
-router.post('/', creatFood);
+router.get('/:id', getFood);
+router.post('/', createFood);
 router.put('/:id', updateFood);
 router.delete('/:id', deleteFood);
 

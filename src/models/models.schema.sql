@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS clothes;
+-- DROP TABLE IF EXISTS clothes;
 
-    CREAT TABLE clothes(
-        id SERIAL PRIMARY KEY,
-        name varchar(255),
-        price INT
-    );
+--     CREATE TABLE clothes(
+--         id SERIAL PRIMARY KEY,
+--         name varchar(255),
+--         price varchar(255)
+--     );
 
 DROP TABLE IF EXISTS food;
 
-CREAT TABLE food(
+CREATE TABLE food(
         id SERIAL PRIMARY KEY,
         name varchar(255),
-        price INT
+        price varchar(255)
     );

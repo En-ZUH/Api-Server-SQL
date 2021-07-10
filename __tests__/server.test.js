@@ -6,6 +6,7 @@ const server = require('../src/server');
 const supergoose = require('@code-fellows/supergoose');
 const request = supergoose(server.server);
 let id;
+
 describe('api server', () => {
 
     it(('Test home page'), async () => {
@@ -28,50 +29,56 @@ describe('api server', () => {
 
 describe('Testing Clothes', () => {
 
-    it(('test empty clothes'), async () => {
-        const response = await request.get('/api/v1/clothes');
-        console.log('response empty array', response.body);
-        expect(response.status).toEqual(200);
-        expect(response.body).toEqual('No data yet');
-    });
+    // it(('test empty clothes'), async () => {
+    //     const response = await request.get('/api/v1/clothes');
+    //     console.log('response empty array', response.body.responseObj);
+    //     expect(response.status).toEqual(200);
+    //     expect(response.body.responseObj).toEqual('No data yet');
+    // });
 
-    it(('test creat clothes'), async () => {
-        const data = { category: 'men', type: 'shirt' };
+    it(('test create clothes'), async () => {
+        const data = { name: 'men', price: 'shirt' };
 
         const response = await request.post('/api/v1/clothes').send(data);
-        console.log('response creat', response.body);
+        // console.log('response create7777777777777777', response.body.id);
+        // id = response.body.responseObj.id;
+
         expect(response.status).toEqual(201);
-        expect(response.body.type).toEqual('shirt');
+        expect(response.body.price).toEqual('shirt');
     });
 
-    it(('test creat clothes'), async () => {
+    it(('test create clothes'), async () => {
         const response = await request.post('/api/v1/clothes').send({
-            category: 'men',
-            type: 'shirt',
+            name: 'men',
+            price: 'shirt',
         });
-        id = response.body._id;
-        console.log('rsponse creat', response.body, 'ID=', id);
+        id = response.body.id;
+        console.log('IIIIIIIIIIIIIIIIIIIId', id);
+        //console.log('rsponse create', response.body.responseObj, 'ID=', response.body);
         expect(response.status).toEqual(201);
-        expect(response.body.category).toEqual('men');
+        expect(response.body.name).toEqual('men');
     });
 
     it(('get by ID'), async () => {
-        console.log('ID', id);
+        //  console.log('ID', id);
 
         const response = await request.get(`/api/v1/clothes/${id}`);
-        console.log('response id', response.body);
+        // id = response.body.id;
+        //  console.log('response id', response.body.responseObj);
+        //console.log('IIIIIIIIIIIIIIIIIIIId', id);
+        // console.log('boooooooooooooooody', response.body);
         expect(response.status).toEqual(200);
-        expect(response.body.type).toEqual('shirt');
+        expect(response.body.responseObj.price).toEqual('shirt');
     });
 
     it(('test update clothes'), async () => {
         const response = await request.put(`/api/v1/clothes/${id}`).send({
-            category: 'men',
-            type: 'shirt55555',
+            name: 'men',
+            price: 'shirt55555'
         });
-
+        console.log('boooooooooooooooody', response.body);
         expect(response.status).toEqual(200);
-        expect(response.body.type).toEqual('shirt55555');
+        expect(response.body.price).toEqual('shirt55555');
     });
 
     it(('test update clothes'), async () => {
@@ -82,16 +89,15 @@ describe('Testing Clothes', () => {
 
     });
     it(('get by ID'), async () => {
-        console.log('ID', id);
+        //console.log('ID', id);
 
         const response = await request.get(`/api/v1/clothes/${id}`);
-        console.log('response id', response.body);
+        // console.log('response id', response.body.responseObj);
         expect(response.status).toEqual(200);
 
     });
 
 });
-
 
 
 describe('api server', () => {
@@ -110,6 +116,7 @@ describe('api server', () => {
     });
 
 
+
 });
 
 //____________________________________________________________________
@@ -118,64 +125,57 @@ describe('Testing food', () => {
 
     // it(('test empty food'), async () => {
     //     const response = await request.get('/api/v1/food');
-    //     console.log('response empty array', response.body);
+    //     console.log('response empty array', response.body.responseObj);
     //     expect(response.status).toEqual(200);
-    //     expect(response.body).toEqual('No data yet');
+    //     expect(response.body.responseObj).toEqual('No data yet');
     // });
 
-    it(('test creat food'), async () => {
-        const data = { category: 'sweets', type: 'cake' };
+    it(('test create food'), async () => {
+        const data = { name: 'sweets', price: 'cake' };
 
         const response = await request.post('/api/v1/food').send(data);
-        console.log('response creat', response.body);
+        //console.log('response create', response.body.responseObj);
         expect(response.status).toEqual(201);
-        expect(response.body.type).toEqual('cake');
+        expect(response.body.price).toEqual('cake');
     });
 
-    it(('test creat food'), async () => {
+    it(('test create food'), async () => {
         const response = await request.post('/api/v1/food').send({
-            category: 'sweets',
-            type: 'cake',
+            name: 'sweets',
+            price: 'cake',
         });
-        id = response.body._id;
-        console.log('response creat', response.body, 'id=======', id);
+        id = response.body.id;
+        // console.log('response create', response.body.responseObj, 'id=======', id);
         expect(response.status).toEqual(201);
-        expect(response.body.category).toEqual('sweets');
+        expect(response.body.name).toEqual('sweets');
     });
 
-    it(('get by ID'), async () => {
-        console.log('ID', id);
+    // it(('get by ID'), async () => {
+    //     //console.log('ID', id);
 
-        const response = await request.get(`/api/v1/food/${id}`);
-        console.log('response id', response.body);
-        expect(response.status).toEqual(200);
-        // expect(response.body.type).toEqual('cake');
-    });
+    //     const response = await request.get(`/api/v1/food/${id}`);
+    //     id = request.body.id;
+    //     console.log('IDDDDDDDDDDDDDDDDDDDDDDDDDD', id)
+    //     // console.log('response id', response.body.responseObj);
+    //     expect(response.status).toEqual(200);
+    //     // expect(response.body.responseObj.price).toEqual('cake');
+    // });
 
     it(('test update food'), async () => {
         const response = await request.put(`/api/v1/food/${id}`).send({
-            category: 'sweets',
-            type: 'chocolate',
+            name: 'sweets',
+            price: 'chocolate',
         });
 
         expect(response.status).toEqual(200);
-        expect(response.body.type).toEqual('chocolate');
+        expect(response.body.price).toEqual('chocolate');
     });
 
-    it(('test delete food'), async () => {
+    it(('test update food'), async () => {
         const response = await request.delete(`/api/v1/food/${id}`);
-
-
         // expect(response.status).toEqual(200);
 
     });
-    it(('get by ID'), async () => {
-        console.log('ID', id);
 
-        const response = await request.get(`/api/v1/food/${id}`);
-        console.log('rsponse id', response.body);
-        expect(response.status).toEqual(200);
-
-    });
 
 });
